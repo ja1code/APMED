@@ -1,0 +1,126 @@
+/**
+* Pacote de estilizações padrão do projeto apmed
+* - Containers padrão
+* - Texting
+*/
+
+@font-face {
+  src: url('../fontes/psans.ttf');
+  font-family: 'psans';
+}
+
+@font-face {
+  src: url('../fontes/psans_bold.ttf');
+  font-family: 'psans-bold';
+}
+
+html, body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: "psans";
+}
+
+/*  Containers Padrão */
+
+
+.flex-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/*  Texting */
+
+.logo {
+  font-family: "psans-bold";
+  margin: 10px;
+}
+
+.login-extras p{
+  margin: 0;
+}
+
+/* Inputs */
+
+.ipt {
+  background-color: #c4c4c4;
+  font-family: 'psans';
+  height: 50px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  margin: 10px;
+  padding-left: 10px;
+  font-size: 1.3rem;
+}
+
+/* buttons */
+
+.btn {
+  height: 62px;
+  background-color: black;
+  color: white;
+  border-style: none;
+  font-family: 'psans';
+  font-size: 1.5rem;
+  padding: 0 !important;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+::placeholder {
+  color: #474747;
+}
+
+/* Responsiveness */
+
+@media(max-width: 900px) { /* Mobile */
+  .logo {
+    font-size: 4rem;
+  }
+
+  .ipt {
+    width: 90vw;
+  }
+
+  .btn {
+    width: 90vw;
+  }
+
+  .login-extras {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+}
+
+@media(min-width: 900px) {
+  .logo {
+    font-size: 5rem;
+  }
+
+  .ipt {
+    width: 350px;
+  }
+
+  .btn {
+    width: 360px;
+  }
+
+  .login-extras {
+    margin-top: 10px;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    font-size: 0.75rem;
+  }
+}

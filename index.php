@@ -14,6 +14,7 @@
   </head>
   <body>
     <h1>APMED virá aqui</h1>
+    <h2><a href="paginas/dashboard.php">Acessar plataforma</a></h2>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -18,9 +18,10 @@ function checarPermissoes ($id) { // Função que busca na tabela Perfil qual é
   }
 }
 
-
-$cpf = $_POST["cpf"]; // Pega do corpo de uma requisição POST o valor "cpf"
-$senha = $_POST["senha"]; // pega o valor "senha"
+$data = file_get_contents('php://input');
+$data = json_decode($data);
+$cpf = $data->cpf; // Pega do corpo de uma requisição POST o valor "cpf"
+$senha = $data->senha; // pega o valor "senha"
 
 $sql = "SELECT * FROM Usuario WHERE loginUsuario = '$cpf'"; // Procura pelo usuário com um cpf x na tabela Usuarios
 $acao = $db->query($sql);
