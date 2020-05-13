@@ -38,10 +38,10 @@
           axios.post(window.location.origin + "/logica/login_logica.php", {cpf, senha})
           .then(r => {
             if (r.data != "Usuário não encontrado") {
-              localStorage.setItem('type', r.data)
+              localStorage.setItem('type', JSON.stringify(r.data))
               window.location.href = window.location.origin +'/paginas/dashboard.php'
             } else {
-              alert(r.data)
+              alert(r.data.tipo)
             }
           })
           .catch(e => {

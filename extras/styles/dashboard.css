@@ -1,0 +1,61 @@
+@font-face {
+  src: url('../fontes/psans.ttf');
+  font-family: 'psans';
+}
+
+* {
+  font-family: 'psans';
+}
+
+.username {
+  max-width: 200px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.usr-img img {
+  width: 40px !important;
+}
+
+.hor-align {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hor-align * {
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+
+.pencil:hover * {
+  color: rgb(59, 167, 218);
+}
+
+.exit:hover * {
+  color: rgb(209, 57, 57);
+}
+
+.bg-blue {
+  background-color: #C5D8FF;
+}
+
+.table-holder table{
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+}
+
+.table-holder table th{
+  background-color: rgba(200,200,200,.6);
+}
+
+.controls {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ctn-holder {
+  padding-top: 20px;
+}

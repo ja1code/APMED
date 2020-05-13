@@ -34,7 +34,10 @@ if ($acao == true) {
   } else { // Caso haja apenas um usuário (usuário correto)
     $dados = $acao->fetch_object(); // Pega o objeto do resultado encontrado
     if ($dados->senhaUsuario == $senha) { // Caso a senha fornecidada no POST seja a mesma senha registrada no banco de dados
-      echo checarPermissoes($dados->Perfil_idPerfil); // Dá como resultado o retorno da função `checarPermissoes`
+      $obj = new stdClass();
+      $obj->tipo = checarPermissoes($dados->Perfil_idPerfil);
+      $obj->id = $dados->Perfil_idPerfil;
+      echo json_encode($obj); // Dá como resultado o retorno da função `checarPermissoes`
     } else { // Caso contrário
       echo "Senha incorreta";
     }
