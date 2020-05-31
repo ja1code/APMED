@@ -40,7 +40,7 @@ if ($act == true) {
               echo "<td>{$fetch->emailFuncionario}</td>";
               echo "<td>{$fetch->telFuncionario}</td>";
               echo "<td>{$fetch->endFuncionario}</td>";
-              echo "<td><a href='?page=edt-funcionario' class='btn btn-primary'>Editar</a></td>";
+              echo "<td><a href='?page=edt-funcionario&id={$fetch->idFuncionario}' class='btn btn-primary'>Editar</a></td>";
               echo "</tr>";
             }
           }

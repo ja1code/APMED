@@ -1,3 +1,28 @@
+<?php
+  include('../logica/config.php');
+  $pacientes = array();
+  $sql = "SELECT * FROM Paciente";
+  $act = $db->query($sql);
+  if ($act) {
+    $nr = $act->num_rows;
+    for($a = 0; $a < $nr; $a++) {
+      $fetch = $act->fetch_object();
+      array_push($pacientes, $fetch);
+    }
+  }
+
+
+  $medicos = array();
+  $sql = "SELECT * FROM Medico";
+  $act = $db->query($sql);
+  if ($act) {
+    $nr = $act->num_rows;
+    for($a = 0; $a < $nr; $a++) {
+      $fetch = $act->fetch_object();
+      array_push($medicos, $fetch);
+    }
+  }
+?>
 <style>
   @import '../extras/styles/main.css';
   .smoll {
@@ -9,7 +34,14 @@
   <div class="CNT">
     <div class="row">
       <div class="col-md-9">
-        <input type="text" class="ipt smoll" placeholder="Nome do paciente" id="nomePaciente">
+        <select class="ipt smoll" id="idPaciente">
+          <option value="X">Paciente</option>
+          <?php
+            for ($i = 0; $i < count($pacientes); $i++) {
+              echo "<option value='{$pacientes[$i]->idPaciente}'>{$pacientes[$i]->nomePaciente}</option>";
+            }
+          ?>
+        </select>
       </div>
       <div class="col-md-3">
         <input type="text" class="ipt smoll" placeholder="CPF" id="cpfPaciente">
@@ -39,7 +71,14 @@
     </div>
     <div class="row">
       <div class="col-md-8">
-        <input type="text" class="ipt smoll" placeholder="Nome do Médico" id="nomeMedico">
+        <select class="ipt smoll" id="idMedico">
+          <option value="X">Médico</option>
+          <?php
+            for ($i = 0; $i < count($medicos); $i++) {
+              echo "<option value='{$medicos[$i]->idMedico}'>{$medicos[$i]->nomeMedico}</option>";
+            }
+          ?>
+        </select>
       </div>
       <div class="col-md-4">
         <input type="text" class="ipt smoll" placeholder="CRM" id="crmMedico">
@@ -70,9 +109,63 @@
         <input type="text" class="ipt smoll" placeholder="Valor" id="valor">
       </div>
     </div>
-    <textarea style="width:100%" name="" id="" cols="30" rows="100" class="ipt" id="obs" placeholder="Observações"></textarea>
+    <textarea style="width:100%" cols="30" rows="100" class="ipt" id="obs" placeholder="Observações"></textarea>
   </div>
   <div style="text-align: center">
-    <button class="btn">Salvar</button>
+    <button class="btn" onclick="send()">Salvar</button>
   </div>
 </div>
+<script src="bin/vendor/jquery/jquery.min.js"></script>
+<script src="bin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+  if (window.location.search.split('=')[1] == 'adc-funcionario') {
+    $('#cpf').mask('000.000.000-00', {reverse: true});
+
+    $('#tel').mask('(00) 00000-0000');
+
+    $('#nasc').mask('00/00/0000', {reverse: true});
+
+    $('#end').mask('00000-000', {reverse: true});
+  }
+
+  function send() {
+    let sendobj = {
+      tipo: 'consulta',
+      data: `${document.getElementById('dia').value}/${document.getElementById('mes').value}/${document.getElementById('ano').value}`,
+      hora: document.getElementById('horario').value,
+      status: 'pendente',
+      prioridade: document.getElementById('prioridade').value,
+      relatorio: document.getElementById('obs').value,
+      medico: document.getElementById('idMedico').value,
+      paciente: document.getElementById('idPaciente').value
+    }
+    let payment = {
+      tipo: 'pagamento',
+      valor: document.getElementById('valor').value,
+      paciente: document.getElementById('idPaciente').value,
+      funcionario: 1
+    }
+    axios.post('/logica/cadastro_logica.php', sendobj)
+      .then(x => {
+        if (x.data == "ok!") {
+          axios.post('/logica/cadastro_logica.php', payment)
+           .then(x => {
+            if (x.data == "ok!") {
+              alert("Dados inseridos com sucesso!")
+              window.location.href = `${window.location.origin}/paginas/dashboard.php`
+            }
+           })
+          .catch(e => {
+            console.log(e)
+            alert('Não foi possível escrever os dados')
+          })
+        }
+      })
+      .catch(e => {
+        console.log(e)
+        alert('Não foi possível escrever os dados')
+      })
+
+  }
+</script>

@@ -62,6 +62,17 @@ function cadastroConsulta() {
   }
 }
 
+function cadastroPagamento() {
+  global $p, $db;
+  $sql = "INSERT INTO Pagamento(valorPagamento, Funcionario_idFuncionario, Paciente_idPaciente) VALUES('{$p["valor"]}', '{$p["funcionario"]}', '{$p["paciente"]}')";
+  $acao = $db->query($sql);
+  if ($acao == true) {
+    echo "ok!";
+  } else {
+    echo "ERRO_DB";
+  }
+}
+
 if (isset($p["tipo"])) {
   if ($p["tipo"] == "medico") {
     cadastro("Medico");
@@ -71,6 +82,8 @@ if (isset($p["tipo"])) {
     cadastro("Funcionario");
   } else if ($p["tipo"] == "consulta") {
     cadastroConsulta();
+  } else if ($p["tipo"] == "pagamento") {
+    cadastroPagamento();
   } else {
     echo "Tipo desconhecido";
   }

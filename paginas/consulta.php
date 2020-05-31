@@ -40,7 +40,7 @@ if ($act == true) {
               echo "<td>{$fetch->nomePaciente}</td>";
               echo "<td>{$fetch->dataConsulta}</td>";
               echo "<td>{$fetch->horaConsulta}</td>";
-              echo "<td><a href='?page=edt-consulta' class='btn btn-primary'>Editar</a></td>";
+              echo "<td><a href='?page=edt-consulta&id={$fetch->idConsulta}' class='btn btn-primary'>Editar</a></td>";
               echo "</tr>";
             }
           }

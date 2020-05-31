@@ -12,7 +12,10 @@
 
   <!-- Bootstrap core CSS -->
   <link href="bin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+  <script
+  src="https://code.jquery.com/jquery-3.5.0.min.js"
+  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+  crossorigin="anonymous"></script>
   <!-- Custom styles for this template -->
   <link href="bin/css/simple-sidebar.css" rel="stylesheet">
   <link rel="stylesheet" href="../extras/styles/dashboard.css">
@@ -163,7 +166,7 @@
       })
       .catch(e => {
         console.log(e)
-        // alert('Não foi possível concluir sua requisição, tente novamente')
+        alert('Não foi possível concluir sua requisição, tente novamente')
       })
   </script>
 

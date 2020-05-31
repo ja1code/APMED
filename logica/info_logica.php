@@ -13,12 +13,14 @@ function info($id, $tipo) {
     if ($tipo == 'Medico') {
       $entidade->crm = $dados["crmMedico"];
     }
+    $entidade->id = $dados["id{$tipo}"];
     $entidade->cpf = $dados["cpf{$tipo}"];
     $entidade->nome = $dados["nome{$tipo}"];
     $entidade->nasc = $dados["nasc{$tipo}"];
     $entidade->end = $dados["end{$tipo}"];
     $entidade->email = $dados["email{$tipo}"];
     $entidade->tel = $dados["tel{$tipo}"];
+    $entidade->tipo = $tipo;
     echo json_encode($entidade);
   } else {
     return "ERRO_DB";
@@ -38,9 +40,9 @@ function infoConsulta($id) {
     $consulta->id = $dados->idConsulta;
     $consulta->status = $dados->statusConsulta;
     $consulta->prioridade = $dados->prioridadeConsulta;
-    $consulta->medico = $dados->nomeMedico;
-    $consulta->paciente = $dados->nomePaciente;
-    $consulta->relatorio = $dados->relatorio;
+    $consulta->medico = $dados->idMedico;
+    $consulta->paciente = $dados->idPaciente;
+    $consulta->relatorio = $dados->relatorioConsulta;
     $consulta->data = $dados->dataConsulta;
     $consulta->horario = $dados->horaConsulta;
     echo json_encode($consulta);
