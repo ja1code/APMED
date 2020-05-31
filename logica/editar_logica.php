@@ -1,6 +1,7 @@
 <?php
 
-$p = $_POST;
+$p = file_get_contents('php://input');
+$p = json_decode($p, true);
 include("config.php");
 
 function editar($tipo) {

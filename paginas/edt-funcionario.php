@@ -43,7 +43,7 @@
     </div>
   </div>
   <div style="width: 100%; text-align: center">
-    <button class="btn">Salvar</button>
+    <button class="btn" onclick="send()">Salvar</button>
   </div>
 </div>
 </div>
@@ -84,7 +84,7 @@
   function send() {
     let sendobj = {
       id,
-      tipo: document.getElementById('tipo').value,
+      tipo: 'funcionario',
       cpf: document.getElementById('cpf').value,
       nome: document.getElementById('nome').value,
       nasc: document.getElementById('nasc').value,

@@ -166,7 +166,7 @@
       })
       .catch(e => {
         console.log(e)
-        alert('Não foi possível concluir sua requisição, tente novamente')
+        // alert('Não foi possível concluir sua requisição, tente novamente')
       })
   </script>
 
