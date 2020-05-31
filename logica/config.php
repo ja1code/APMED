@@ -1,9 +1,9 @@
 <?php
 
-  $endereco = "altiorem.dev";
+  $endereco = "x";
   $usuario = "apmed";
-  $senha = "4pm3d2020";
-  $nome_db = "apmed";
+  $senha = "x";
+  $nome_db = "apmedv2";
   $db = new mysqli($endereco, $usuario, $senha, $nome_db);
   $db->set_charset("utf8");
   

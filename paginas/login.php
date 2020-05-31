@@ -26,7 +26,6 @@
   </div>
   <script>
     $(document).ready(() => {
-      console.log('a')
       $('#cpf').mask('000.000.000-00', {reverse: true});
     })
     function login() {
@@ -39,6 +38,12 @@
           .then(r => {
             if (r.data != "Usuário não encontrado") {
               localStorage.setItem('type', JSON.stringify(r.data))
+              if (r.data.tipo != 'Admin') {
+                document.cookie = `type=${r.data.tipo}`
+              } else {
+                document.cookie = `type=Funcionario`
+                document.cookie = `admin=true`
+              }
               window.location.href = window.location.origin +'/paginas/dashboard.php'
             } else {
               alert(r.data.tipo)

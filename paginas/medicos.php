@@ -42,7 +42,7 @@ if ($act == true) {
               echo "<td>{$fetch->emailMedico}</td>";
               echo "<td>{$fetch->telMedico}</td>";
               echo "<td>{$fetch->endMedico}</td>";
-              echo "<td><button class='btn btn-primary'>Editar</button></td>";
+              echo "<td><a href='?page=edt-medico' class='btn btn-primary'>Editar</a></td>";
               echo "</tr>";
             }
           }

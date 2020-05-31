@@ -8,7 +8,7 @@ include('config.php'); // Importa o arquivo de configuração
 
 function checarPermissoes ($id) { // Função que busca na tabela Perfil qual é a desc do usuário que está realizando login
   global $db; // Chama a variavel externa $db
-  $sql = "SELECT * FROM Perfil WHERE idPerfil = '$id'"; // Seleciona tudo da tabela perfil, onde o id é X
+  $sql = "SELECT * FROM Perfil WHERE Usuario_idUsuario = '$id'"; // Seleciona tudo da tabela perfil, onde o id é X
   $acao = $db->query($sql); // Realiza a query
   if ($acao == true) { // Caso a query seja verdadeira:
     $dados = $acao->fetch_object(); // Pegar o objeto resultado da query
@@ -35,8 +35,8 @@ if ($acao == true) {
     $dados = $acao->fetch_object(); // Pega o objeto do resultado encontrado
     if ($dados->senhaUsuario == $senha) { // Caso a senha fornecidada no POST seja a mesma senha registrada no banco de dados
       $obj = new stdClass();
-      $obj->tipo = checarPermissoes($dados->Perfil_idPerfil);
-      $obj->id = $dados->Perfil_idPerfil;
+      $obj->tipo = checarPermissoes($dados->idUsuario);
+      $obj->id = $dados->idUsuario;
       echo json_encode($obj); // Dá como resultado o retorno da função `checarPermissoes`
     } else { // Caso contrário
       echo "Senha incorreta";

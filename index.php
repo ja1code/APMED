@@ -11,10 +11,37 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <title>APMED</title>
+    <style>
+      .content {
+        display: flex;
+        align-items: space-between;
+      }
+
+      .text {
+        margin: 30px;
+      }
+    </style>
   </head>
   <body>
-    <h1>APMED virá aqui</h1>
-    <h2><a href="paginas/dashboard.php">Acessar plataforma</a></h2>
+    <nav class="navbar navbar-light bg-light" style="background-color: #C5D8FF !important;">
+      <h2><b>APMED</b></h2>
+      <a href="/paginas/login.php">Acessar a plataforma <b>APMED</b></a>
+    </nav>
+    <img src="extras/images/banner.png" alt="BaNner">
+    <div class="container">
+      <div class="content">
+        <div class="text">
+          <h3>Título 1</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in purus non nisl porttitor consectetur. Curabitur aliquet felis eget nulla imperdiet pharetra. Proin vel odio vitae mi scelerisque dapibus. Nulla lacus dolor, aliquam congue gravida a, accumsan quis magna. Nunc velit felis, ornare vel turpis quis, ornare luctus justo. Sed eget enim justo. Donec viverra justo justo, ac eleifend urna lacinia sed. Ut lacinia justo elit, sodales feugiat nunc tincidunt at. Mauris nec ante sit amet nisi convallis interdum ac et eros. Donec consequat sit amet odio ut pharetra.</p>
+          <button class="btn btn-dark">Saiba mais</button>
+        </div>
+        <div class="text">
+          <h3>Título 1</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in purus non nisl porttitor consectetur. Curabitur aliquet felis eget nulla imperdiet pharetra. Proin vel odio vitae mi scelerisque dapibus. Nulla lacus dolor, aliquam congue gravida a, accumsan quis magna. Nunc velit felis, ornare vel turpis quis, ornare luctus justo. Sed eget enim justo. Donec viverra justo justo, ac eleifend urna lacinia sed. Ut lacinia justo elit, sodales feugiat nunc tincidunt at. Mauris nec ante sit amet nisi convallis interdum ac et eros. Donec consequat sit amet odio ut pharetra.</p>
+          <button class="btn btn-dark">Saiba mais</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -25,31 +25,11 @@ function info($id, $tipo) {
   }
 }
 
-function infoProntuario($id) {
-  global $db;
-  $sql = "SELECT * FROM Prontuario WHERE idProntuario = '$id'";
-  $acao = $db->query($sql);
-  if ($acao == true) {
-    $dados = $acao->fetch_object();
-    $prontuario = new stdClass;
-    $prontuario->id = $dados->idProntuario;
-    $prontuario->desc = $dados->DeProntuario;
-    $prontuario->nome = $dados->nomePaciente;
-    $prontuario->nasc = $dados->nascPaciente;
-    $prontuario->peso = $dados->pesoPaciente;
-    $prontuario->idade = $dados->idadePaciente;
-    echo json_encode($prontuario);
-  } else {
-    echo "ERRO_DB";
-  }
-}
-
 function infoConsulta($id) {
   global $db;
   $sql = "SELECT * FROM Consulta
    INNER JOIN Medico ON Consulta.Medico_idMedico = Medico.idMedico 
    INNER JOIN Paciente ON Consulta.Paciente_idPaciente = Paciente.idPaciente 
-   INNER JOIN Prontuario ON Consulta.Prontuario_idProntuario = Prontuario.idProntuario
    WHERE idConsulta = '$id'";
   $acao = $db->query($sql);
   if ($acao == true) {
@@ -60,7 +40,7 @@ function infoConsulta($id) {
     $consulta->prioridade = $dados->prioridadeConsulta;
     $consulta->medico = $dados->nomeMedico;
     $consulta->paciente = $dados->nomePaciente;
-    $consulta->prontuario = $dados->DeProntuario;
+    $consulta->relatorio = $dados->relatorio;
     $consulta->data = $dados->dataConsulta;
     $consulta->horario = $dados->horaConsulta;
     echo json_encode($consulta);
@@ -76,8 +56,6 @@ if (isset($g["tipo"])) {
     info($g["id"], 'Paciente');
   } else if ($g["tipo"] == "funcionario") {
     info($g["id"], 'Funcionario');
-  } else if ($g["tipo"] == "prontuario") {
-    infoProntuario($g["id"]);
   } else if ($g["tipo"] == "consulta") {
     infoConsulta($g["id"]);
   } else {

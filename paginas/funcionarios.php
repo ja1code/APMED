@@ -12,7 +12,7 @@ if ($act == true) {
 <div class="ctn-holder">
   <h1>Funcionários</h1>
   <div class="controls">
-    <button class="btn btn-success">Adicionar novo funcionario</button>
+    <a role="button" href="?page=adc-funcionario" class="btn btn-success" >Adicionar novo funcionario</a>
   </div>
   <div class="table-holder">
     <table class="table">
@@ -40,7 +40,7 @@ if ($act == true) {
               echo "<td>{$fetch->emailFuncionario}</td>";
               echo "<td>{$fetch->telFuncionario}</td>";
               echo "<td>{$fetch->endFuncionario}</td>";
-              echo "<td><button class='btn btn-primary'>Editar</button></td>";
+              echo "<td><a href='?page=edt-funcionario' class='btn btn-primary'>Editar</a></td>";
               echo "</tr>";
             }
           }

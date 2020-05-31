@@ -30,10 +30,21 @@
       <div class="sidebar-heading"><h1><b>APMED</b></h1></div>
       <div class="username"><a id="permission"></a></div>
       <div class="list-group list-group-flush">
-        <a href="?page=funcionarios" class="list-group-item list-group-item-action bg-blue">Funcionários</a>
-        <a href="?page=medicos" class="list-group-item list-group-item-action bg-blue">Médicos</a>
-        <a href="?page=paciente" class="list-group-item list-group-item-action bg-blue">Pacientes</a>
-        <a href="?page=consulta" class="list-group-item list-group-item-action bg-blue">Consultas</a>
+      <?php
+        if (isset($_COOKIE['type'])) {
+          if ($_COOKIE['type'] === 'Medico') {
+            echo '<a href="?page=pacientes" class="list-group-item list-group-item-action bg-blue">Pacientes</a>';
+            echo '<a href="?page=relatorios" class="list-group-item list-group-item-action bg-blue">Relatórios</a>';
+            echo '<a href="?page=consultas" class="list-group-item list-group-item-action bg-blue">Consultas</a>';
+          } elseif ($_COOKIE['type'] === 'Funcionario' && !isset($_COOKIE['admin'])) {
+            echo '<a href="?page=consultas" class="list-group-item list-group-item-action bg-blue">Consultas</a>';
+            echo '<a href="?page=pacientes" class="list-group-item list-group-item-action bg-blue">Pacientes</a>';
+            echo '<a href="?page=pagamentos" class="list-group-item list-group-item-action bg-blue">Pagamentos</a>';
+          } elseif ($_COOKIE['type'] === 'Funcionario' && isset($_COOKIE['admin'])) {
+            echo '<a href="?page=funcionarios" class="list-group-item list-group-item-action bg-blue">Funcionários</a>';
+          }
+        }
+      ?>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -66,6 +77,7 @@
 
       <div class="container-fluid">
         <?php 
+          session_start();
           switch(@$_REQUEST['page']) {
             case 'funcionarios':
               include('./funcionarios.php');
@@ -85,7 +97,7 @@
             case 'edt-medico':
               include('./edt-medico.php');
             break;
-            case 'paciente':
+            case 'pacientes':
               include('./paciente.php');
             break;
             case 'adc-paciente':
@@ -94,7 +106,7 @@
             case 'edt-paciente':
               include('./edt-paciente.php');
             break;
-            case 'consulta':
+            case 'consultas':
               include('./consulta.php');
             break;
             case 'adc-consulta':
@@ -102,6 +114,22 @@
             break;
             case 'edt-consulta':
               include('./edt-consulta.php');
+            break;
+            case 'pagamentos':
+              include('./pagamentos.php');
+            break;
+            case 'relatorios':
+              include('./relatorio.php');
+            break;
+            case 'ver-relatorio':
+              include('./edt-relatorio.php');
+            break;
+            default:
+              if (!isset($_COOKIE['admin'])) {
+                include("./home-{$_COOKIE['type']}.php");
+              } elseif ($_COOKIE['type'] === 'Funcionario' && isset($_COOKIE['admin'])) {
+                include("./home-admin.php");
+              }
             break;
           }
         ?>
@@ -124,14 +152,18 @@
     });
 
     let userdata = JSON.parse(localStorage.getItem('type'))
-    console.log(userdata)
+    tipo = userdata.tipo == "Admin" ? "Funcionario" : userdata.tipo
     axios.get(`/logica/dados_usuarios.php?id=${userdata.id}`)
       .then(r => {
-        document.getElementById('permission').innerText = userdata.tipo
+        document.getElementById('permission').innerText = tipo
         document.getElementById('username').innerText = r.data[`nome${userdata.tipo}`]
+        if (document.getElementById('welcome-header')) {
+          document.getElementById('welcome-header').innerText = `Seja bem vindo ${r.data[`nome${userdata.tipo}`]}`
+        }
       })
       .catch(e => {
-        alert('Não foi possível concluir sua requisição, tente novamente')
+        console.log(e)
+        // alert('Não foi possível concluir sua requisição, tente novamente')
       })
   </script>
 

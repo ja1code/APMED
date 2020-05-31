@@ -1,66 +1,59 @@
 <?php
 
-$p = $_POST;
+$p = file_get_contents('php://input');
+$p = json_decode($p, true);
 include('config.php');
+
 
 function cadastroGenerico($tipo, $login, $senha) {
   global $db;
-  $sql = "INSERT INTO Perfil(DePerfil) VALUES('$tipo')";
-  $acao = $db->query($sql);
-  if ($acao == true) {
-    $acao = $db->query("SELECT MAX(idPerfil) as idPerfil FROM Perfil");
-    if ($acao == true) {
-      $dados = $acao->fetch_object();
-      $idPerfil = $dados->idPerfil;
-      $sql = "INSERT INTO Usuario(loginUsuario, senhaUsuario, Perfil_idPerfil) VALUES ('$login', '$senha', '$idPerfil')";
-      $acao = $db->query($sql);
-      if ($acao == true) {
-        $acao = $db->query("SELECT MAX(idUsuario) as idUsuario FROM Usuario");
-        if ($acao == true) {
-          $dados = $acao->fetch_object();
-          return $dados->idUsuario;
-        } else {
-          return 'ERRO_DB';
-        }
+  $sql = "INSERT INTO Usuario (loginUsuario, senhaUsuario) VALUES ('{$login}', '{$senha}')";
+  $act = $db->query($sql);
+  if ($act) {
+    $sql = "SELECT MAX(idUsuario) AS mx FROM Usuario";
+    $act = $db->query($sql);
+    if ($act) {
+      $fetch = $act->fetch_object()->mx;
+      $sql = "INSERT INTO Perfil(DePerfil, Usuario_idUsuario) VALUES ('{$tipo}', '{$fetch}')";
+      $act = $db->query($sql);
+      if ($act) {
+        return $fetch;
       } else {
         return 'ERRO_DB';
       }
     } else {
-      return 'ERRO_DB';
-    }  
+      "ERRO_DB";
+    }
   } else {
-    return 'ERRO_DB';
+    return "ERRO_DB";
   }
 }
 
 function cadastro($tipo) {
   global $p, $db;
   $idUsuario = cadastroGenerico($tipo, $p["cpf"], $p["senha"]);
-  if ($tipo == "Medico") {
-    $sql = "INSERT INTO Medico(crmMedico, cpfMedico, nomeMedico, nascMedico, endMedico, emailMedico, telMedico, Usuario_idUsuario) VALUES ('{$p["crm"]}', '{$p["cpf"]}', '{$p["nome"]}', '{$p["nasc"]}', '{$p["end"]}', '{$p["email"]}', '{$p["tel"]}', '$idUsuario')";
+  if ($idUsuario !== 'ERRO_DB') {
+    if ($tipo == "Medico") {
+      $sql = "INSERT INTO Medico(crmMedico, cpfMedico, nomeMedico, endMedico, emailMedico, telMedico, Usuario_idUsuario) VALUES ('{$p["crm"]}', '{$p["cpf"]}', '{$p["nome"]}', '{$p["end"]}', '{$p["email"]}', '{$p["tel"]}', '$idUsuario')";
+    } else {
+      if ($tipo == "Admin") {
+        $tipo = "Funcionario";
+      }
+      $sql = "INSERT INTO `apmedv2`.`{$tipo}` (`cpf{$tipo}`, `nome{$tipo}`, `nasc{$tipo}`, `end{$tipo}`, `email{$tipo}`, `tel{$tipo}`, `Usuario_idUsuario`) VALUES ('{$p["cpf"]}', '{$p["nome"]}', '{$p["nasc"]}', '{$p["end"]}', '{$p["email"]}', '{$p["tel"]}', '$idUsuario')";
+    }
+    $acao = $db->query($sql);
+    if ($acao == true) {
+      echo 'ok!';
+    }
   } else {
-    $sql = "INSERT INTO `apmed`.`{$tipo}` (`cpf{$tipo}`, `nome{$tipo}`, `nasc{$tipo}`, `end{$tipo}`, `email{$tipo}`, `tel{$tipo}`, `Usuario_idUsuario`) VALUES ('{$p["cpf"]}', '{$p["nome"]}', '{$p["nasc"]}', '{$p["end"]}', '{$p["email"]}', '{$p["tel"]}', '$idUsuario')";
-  }
-  $acao = $db->query($sql);
-  if ($acao == true) {
-    echo 'ok!';
+    echo 'ERRO_DB';
   }
 }
 
-function cadastroProntuario() {
-  global $p, $db;
-  $sql = "INSERT INTO Prontuario(DeProntuario, nomePaciente, nascPaciente, pesoPaciente, idadePaciente) VALUES('{$p["desc"]}', '{$p["nome"]}', '{$p["nasc"]}', '{$p["peso"]}', '{$p["idade"]}')";
-  $acao = $db->query($sql);
-  if ($acao == true) {
-    echo "ok!";
-  } else {
-    echo "ERRO_DB";
-  }
-}
 
 function cadastroConsulta() {
   global $p, $db;
-  $sql = "INSERT INTO Consulta(statusConsulta, prioridadeConsulta, Medico_idMedico, Paciente_idPaciente, Prontuario_idProntuario, horaConsulta, dataConsulta) VALUES('{$p["status"]}','{$p["prioridade"]}', '{$p["medico"]}', '{$p["paciente"]}', '{$p["prontuario"]}', '{$p["hora"]}', '{$p["data"]}')";
+  $sql = "INSERT INTO Consulta(statusConsulta, prioridadeConsulta, Medico_idMedico, Paciente_idPaciente, relatorioConsulta, horaConsulta, dataConsulta) VALUES('{$p["status"]}','{$p["prioridade"]}', '{$p["medico"]}', '{$p["paciente"]}', '{$p["relatorio"]}', '{$p["hora"]}', '{$p["data"]}')";
   $acao = $db->query($sql);
   if ($acao == true) {
     echo "ok!";
@@ -76,8 +69,6 @@ if (isset($p["tipo"])) {
     cadastro("Paciente");
   } else if ($p["tipo"] == "funcionario") {
     cadastro("Funcionario");
-  } else if ($p["tipo"] == "prontuario") {
-    cadastroProntuario();
   } else if ($p["tipo"] == "consulta") {
     cadastroConsulta();
   } else {
