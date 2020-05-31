@@ -33,7 +33,7 @@ if ($act == true) {
               echo "<td>{$fetch->nomePaciente}</td>";
               echo "<td>{$fetch->nomeFuncionario}</td>";
               echo "<td>{$fetch->valorPagamento}</td>";
-              echo "<td><button class='btn btn-primary'>Editar</button></td>";
+              echo "<td><button class='btn btn-primary'>Editar</button><button onclick='del(${$fetch->idPagamento})' class='btn btn-danger'>Deletar</button></td>";
               echo "</tr>";
             }
           }
@@ -43,3 +43,19 @@ if ($act == true) {
     </table>
   </div>
 </div>
+<script>
+  function del(id) {
+    axios.post(`/logica/deletar_logica.php?id=${id}&tipo=pagamentos`)
+      .then(x => {
+        if (x.data == "Deletado!") {
+          alert('Item removido com sucesso!')
+          window.location.href = "/dashboard.php?page=pagamentos"
+        } else {
+          alert("Erro ao remover item")
+        }
+      })
+      .catch(() => {
+        alert("Erro ao remover item")
+      })
+  }
+</script>

@@ -31,7 +31,6 @@
     function login() {
       let cpf = document.getElementById('cpf').value
       let senha = document.getElementById('senha').value
-      console.log(cpf, senha)
       if (cpf.length > 0 && senha.length > 0) {
         if (cpf.length == 14) {
           axios.post(window.location.origin + "/logica/login_logica.php", {cpf, senha})

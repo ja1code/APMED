@@ -40,7 +40,7 @@ if ($act == true) {
               echo "<td>{$fetch->emailFuncionario}</td>";
               echo "<td>{$fetch->telFuncionario}</td>";
               echo "<td>{$fetch->endFuncionario}</td>";
-              echo "<td><a href='?page=edt-funcionario&id={$fetch->idFuncionario}' class='btn btn-primary'>Editar</a></td>";
+              echo "<td><a href='?page=edt-funcionario&id={$fetch->idFuncionario}' class='btn btn-primary'>Editar</a><button onclick='del({$fetch->idFuncionario})' class='btn btn-danger'>Deletar</button></td>";
               echo "</tr>";
             }
           }
@@ -50,3 +50,19 @@ if ($act == true) {
     </table>
   </div>
 </div>
+<script>
+  function del(id) {
+    axios.post(`/logica/deletar_logica.php?id=${id}&tipo=funcionario`)
+      .then(x => {
+        if (x.data == "Deletado!") {
+          alert('Item removido com sucesso!')
+          window.location.href = "/dashboard.php?page=funcionarios"
+        } else {
+          alert("Erro ao remover item")
+        }
+      })
+      .catch(() => {
+        alert("Erro ao remover item")
+      })
+  }
+</script>
